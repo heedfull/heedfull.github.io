@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
-  <link href="http://heedfull.github.io/atom.xml" rel="self"/>
-  <link href="http://heedfull.github.io/"/>
-  <updated>2014-07-05T22:36:28+01:00</updated>
-  <id>http://heedfull.github.io/</id>
+  <title><![CDATA[Edwin Goddard]]></title>
+  <link href="http://edwingoddard.com/atom.xml" rel="self"/>
+  <link href="http://edwingoddard.com/"/>
+  <updated>2014-07-06T00:10:04+01:00</updated>
+  <id>http://edwingoddard.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Edwin Goddard]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Introducing FeedToShare]]></title>
+    <link href="http://edwingoddard.com/blog/2014/07/05/introducing-feedtoshare/"/>
+    <updated>2014-07-05T23:39:58+01:00</updated>
+    <id>http://edwingoddard.com/blog/2014/07/05/introducing-feedtoshare</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
 </feed>

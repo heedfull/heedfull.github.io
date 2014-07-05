@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - My Octopress Blog</title>
-  <meta name="author" content="Your Name">
+  <title>Blog Archive - Edwin Goddard</title>
+  <meta name="author" content="Edwin Goddard">
 
   
-  <meta name="description" content=" Blog Archive Recent Posts ">
+  <meta name="description" content="Blog Archive 2014 Introducing FeedToShare
+Jul 05 2014 Recent Posts Introducing FeedToShare GitHub Repos Status updating... @heedfull on GitHub $( &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,10 +19,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://heedfull.github.io/blog/archives">
+  <link rel="canonical" href="http://edwingoddard.com/blog/archives">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <link href="/atom.xml" rel="alternate" title="Edwin Goddard" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
@@ -31,14 +32,26 @@
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-52567340-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">My Octopress Blog</a></h1>
+  <h1><a href="/">Edwin Goddard</a></h1>
   
-    <h2>A blogging framework for hackers.</h2>
+    <h2>Blog of a developer and designer</h2>
   
 </hgroup>
 
@@ -50,7 +63,7 @@
   
 <form action="https://www.google.com/search" method="get">
   <fieldset role="search">
-    <input type="hidden" name="q" value="site:heedfull.github.io" />
+    <input type="hidden" name="q" value="site:edwingoddard.com" />
     <input class="search" type="text" name="q" results="0" placeholder="Search"/>
   </fieldset>
 </form>
@@ -73,6 +86,19 @@
   
   <div id="blog-archives">
 
+
+
+  
+  <h2>2014</h2>
+
+<article>
+  
+<h1><a href="/blog/2014/07/05/introducing-feedtoshare/">Introducing FeedToShare</a></h1>
+<time datetime="2014-07-05T23:39:58+01:00" pubdate><span class='month'>Jul</span> <span class='day'>05</span> <span class='year'>2014</span></time>
+
+
+</article>
+
 </div>
 
   
@@ -86,7 +112,40 @@
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
+      <li class="post">
+        <a href="/blog/2014/07/05/introducing-feedtoshare/">Introducing FeedToShare</a>
+      </li>
+    
   </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/heedfull">@heedfull</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'heedfull',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
 </section>
 
 
@@ -100,7 +159,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Your Name -
+  Copyright &copy; 2014 - Edwin Goddard -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

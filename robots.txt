@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://heedfull.github.io/sitemap.xml 
+Sitemap: http://edwingoddard.com/sitemap.xml 
