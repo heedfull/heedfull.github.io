@@ -9,7 +9,7 @@
   <meta name="author" content="Edwin Goddard">
 
   
-  <meta name="description" content="This is the first in a series of post detailing the development of FeedToShare. Problem Freedomain Radio is the &ldquo;number 1 philosophy podcast& &hellip;">
+  <meta name="description" content="This is the first in a series of post detailing the development of FeedToShare. Feed to Share is a Ruby on Rails web app design to consume and RSS &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,11 +103,11 @@
   </header>
 
 
-<div class="entry-content"><p>This is the first in a series of post detailing the development of <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a>.</p>
+<div class="entry-content"><p>This is the first in a series of post detailing the development of <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a>. Feed to Share is a Ruby on Rails web app design to consume and RSS feed of podcasts episodes and make a torrent file for each of those episodes. It then goes onto seed those torrents and produces an RSS feed of the torrent episodes to allow other to automatically download the torrents and the episodes.</p>
 
 <h2>Problem</h2>
 
-<p><a href="https://freedomainradio.com/">Freedomain Radio</a> is the &ldquo;number 1 philosophy podcast&rdquo;. They do not have advertising or sponsors because the host of the show, Stefan Molyneux, believes that his listeners time is too important. He relies solely on donations to keep his work going. He is current doing 900GB of downloads a month, and that sort of bandwidth doesn&rsquo;t come cheap. My goal is to build a system that makes it easy for his users to listen to the podcast whilst reducing the bandwidth used.</p>
+<p><a href="https://freedomainradio.com/">Freedomain Radio</a> is the &ldquo;number 1 philosophy podcast&rdquo;. They do not have advertising or sponsors because the host of the show, Stefan Molyneux, believes that his listeners&#8217; time is too important. He relies solely on donations to keep his work going. He is current getting 900GB of downloads a month, and that sort of bandwidth doesn&rsquo;t come cheap. My goal is to build a system that makes it easy for his users to listen to the podcast whilst reducing the bandwidth that he uses with his web hosting .</p>
 
 <h2>Solution</h2>
 
@@ -141,9 +141,9 @@
 <pre><code>git flow init
 </code></pre>
 
-<p>With the git flow model you will be doing most of your work on the develop branch or on feature branches. The master branch is reserved for when you actually release the software, and should be the code that is actually deployed to your production environment. With this in mind I change the default branch in github to be the develop branch.</p>
+<p>With the git flow model you will be doing most of your work on the develop branch or on feature branches. The master branch is reserved for when you actually release the software. It should contain the code that is actually deployed to your production environment. With this in mind I change the default branch in github to be the develop branch.</p>
 
-<p>I then went and created a new repo on github and add this repo as the origin for our local repo. Then add the files This will make it easy to push and pull and changes and share the code with others.</p>
+<p>I then went and created a new repo on github and added this repo as the origin for our local repo. Then add the files This will make it easy to push and pull and changes and share the code with others.</p>
 
 <pre><code>git remote add origin https://github.com/heedfull/FeedToShare.git
 git add .
@@ -151,24 +151,25 @@ git commit -m "Initial commit of rails application"
 git push origin develop
 </code></pre>
 
-<p>git push
+<!--
 bundle
 bin/rails generate rspec:install
 st .zsh_history
 bundle binstubs rspec-core
 git status
 git add .
-git commit -m &ldquo;Adding rspec and capybara so can do test driven development&rdquo;
+git commit -m "Adding rspec and capybara so can do test driven development"
 git push
 ls
 rm -rf test
 git rm -rf test
 git status
-git commit -m &ldquo;Removed test directory as no longer needed&rdquo;
+git commit -m "Removed test directory as no longer needed"
 git push
 git push develop origin
 git push origin develop
-ping 192.168.192.1</p>
+ping 192.168.192.1-->
+
 </div>
 
 
