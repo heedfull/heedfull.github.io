@@ -9,8 +9,7 @@
   <meta name="author" content="Edwin Goddard">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="This is the first in a series of post detailing the development of FeedToShare. Problem Freedomain Radio is the &ldquo;number 1 philosophy podcast& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -51,7 +50,7 @@
   <header role="banner"><hgroup>
   <h1><a href="/">Edwin Goddard</a></h1>
   
-    <h2>Blog of a developer and designer</h2>
+    <h2>the path to becoming a unicorn</h2>
   
 </hgroup>
 
@@ -107,7 +106,72 @@
   </header>
 
 
-  <div class="entry-content">
+  <div class="entry-content"><p>This is the first in a series of post detailing the development of <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a>.</p>
+
+<h2>Problem</h2>
+
+<p><a href="https://freedomainradio.com/">Freedomain Radio</a> is the &ldquo;number 1 philosophy podcast&rdquo;. They do not have advertising or sponsors because the host of the show, Stefan Molyneux, believes that his listeners time is too important. He relies solely on donations to keep his work going. He is current doing 900GB of downloads a month, and that sort of bandwidth doesn&rsquo;t come cheap. My goal is to build a system that makes it easy for his users to listen to the podcast whilst reducing the bandwidth used.</p>
+
+<h2>Solution</h2>
+
+<p>Stefan talked about torrents but said that they were too difficult for the average user. I want to build a system that downloads a copy of the episode, creates a torrent and starts seeding that episode. FeedToShare is the name that I&rsquo;ve given for that system. It would then create an RSS feed of the torrents allowing some to subscribe to automatically download the new episodes. Once this is up and running I would like to create an Android App based on the <a href="https://github.com/rakshasa/libtorrent/tree/master">libtorrent library</a>. This would allow listeners to share the episode amongst themselves and eventually listen to them in the app.</p>
+
+<p>I&rsquo;ve decided to build <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a> as a web app using Ruby on Rails. Ruby on Rails gives me the ability to develop a web front end for managing the torrents easily. Ruby on Rails also has the capability to spin of ruby processes, these will be used to interact with <a href="http://www.transmissionbt.com/">Transmission</a> that I am using to do the torrent creating and seeding.</p>
+
+<p>I plan to develop this app in the open. All the code is <a href="https://github.com/heedfull/FeedToShare">shared on github</a> and I will be blogging about all that I am doing here, in the hope that it might help other who want to build their own apps. So let&rsquo;s get started.</p>
+
+<p>First want to make sure you have your development environment setup. There is a <a href="http://rubyonrails.org/download/">guide</a> on their website how to do that. If you&rsquo;re on a mac I would recommend using <a href="https://github.com/sstephenson/rbenv">rbenv</a>, so that you can use different versions of ruby on your machine, really useful if you&rsquo;re working on a few different projects or using hosts with different versions of ruby.</p>
+
+<p>Now that have rails installed you can create a new rails applicaiton</p>
+
+<pre><code>rails new FeedToShare
+</code></pre>
+
+<p>I&rsquo;m going to be using <a href="http://www.git-scm.com/">git</a>, <a href="https://github.com/">github</a> and <a href="https://github.com/nvie/gitflow">git flow</a>. If you haven&rsquo;t tried git flow, I would highly recommend it. I know it&rsquo;s going to make managing this project much eaiser. This <a href="http://vimeo.com/16018419">video walkthorough</a> really help sell it to me.</p>
+
+<p>First go into the directory that has been created</p>
+
+<pre><code>cd FeedToShare
+</code></pre>
+
+<p>Initialise a new repo</p>
+
+<pre><code>git init
+</code></pre>
+
+<p>And setup git flow in that repo</p>
+
+<pre><code>git flow init
+</code></pre>
+
+<p>With the git flow model you will be doing most of your work on the develop branch or on feature branches. The master branch is reserved for when you actually release the software, and should be the code that is actually deployed to your production environment. With this in mind I change the default branch in github to be the develop branch.</p>
+
+<p>I then went and created a new repo on github and add this repo as the origin for our local repo. Then add the files This will make it easy to push and pull and changes and share the code with others.</p>
+
+<pre><code>git remote add origin https://github.com/heedfull/FeedToShare.git
+git add .
+git commit -m "Initial commit of rails application"
+git push origin develop
+</code></pre>
+
+<p>git push
+bundle
+bin/rails generate rspec:install
+st .zsh_history
+bundle binstubs rspec-core
+git status
+git add .
+git commit -m &ldquo;Adding rspec and capybara so can do test driven development&rdquo;
+git push
+ls
+rm -rf test
+git rm -rf test
+git status
+git commit -m &ldquo;Removed test directory as no longer needed&rdquo;
+git push
+git push develop origin
+git push origin develop
+ping 192.168.192.1</p>
 </div>
   
   
