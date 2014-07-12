@@ -141,8 +141,6 @@
 <pre><code>git flow init
 </code></pre>
 
-<p>With the git flow model you will be doing most of your work on the develop branch or on feature branches. The master branch is reserved for when you actually release the software. It should contain the code that is actually deployed to your production environment. With this in mind I change the default branch in github to be the develop branch.</p>
-
 <p>I then went and created a new repo on github and added this repo as the origin for our local repo. Then add the files This will make it easy to push and pull and changes and share the code with others.</p>
 
 <pre><code>git remote add origin https://github.com/heedfull/FeedToShare.git
@@ -150,6 +148,8 @@ git add .
 git commit -m "Initial commit of rails application"
 git push origin develop
 </code></pre>
+
+<p>With the git flow model you will be doing most of your work on the develop branch or on feature branches. The master branch is reserved for when you actually release the software. It should contain the code that is actually deployed to your production environment. With this in mind I change the default branch in github to be the develop branch.</p>
 
 <!--
 bundle
