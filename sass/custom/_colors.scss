@@ -2,11 +2,15 @@
 // To give it a try, uncomment some of the lines below rebuild your blog, and see how it works.
 // If you need a handy color picker try http://hslpicker.com
 
-//$header-bg: #263347;
-//$subtitle-color: lighten($header-bg, 58);
-//$nav-bg: desaturate(lighten(#8fc17a, 18), 5);
+$page-bg: #ecf0f1;
+$header-bg: #ecf0f1;
+$title-color: #2980b9;
+// $subtitle-color: lighten($header-bg, 58);
+$nav-bg: #2980b9;
 //$nav-bg-front: image-url('noise.png');
-//$nav-bg-back: linear-gradient(lighten($nav-bg, 8), $nav-bg, darken($nav-bg, 11));
+$nav-bg-back: $nav-bg;
+$nav-color: #aaa;
+$nav-color-hover: lighten($nav-color, 25);
 //$sidebar-bg: desaturate(#eceff5, 8);
 //$sidebar-link-color: saturate(#526f9a, 10);
 //$sidebar-link-color-hover: darken(#7ab662, 9);
@@ -14,6 +18,14 @@
 //$footer-bg-front: image-url('noise.png');
 //$footer-bg-back: linear-gradient(lighten($footer-bg, 8), $footer-bg, darken($footer-bg, 11));
 
+$link-color: #3498db;
+$link-color-hover: adjust-color($link-color, $lightness: 10, $saturation: 25);
+$link-color-visited: adjust-color($link-color,$lightness: -15, $saturation: 25);
+$link-color-active: adjust-color($link-color-hover, $lightness: -15);
+
+a {
+  @include link-colors($link-color, $hover: $link-color-hover, $focus: $link-color-hover, $visited: $link-color-visited, $active: $link-color-active);
+}
 
 /* To use the light Solarized highlighting theme uncomment the following line */
 //$solarized: light;
