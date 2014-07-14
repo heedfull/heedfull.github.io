@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Edwin Goddard]]></title>
-  <link href="http://edwingoddard.com/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Feedtoshare | Edwin Goddard]]></title>
+  <link href="http://edwingoddard.com/blog/categories/feedtoshare/atom.xml" rel="self"/>
   <link href="http://edwingoddard.com/"/>
   <updated>2014-07-14T20:01:03+01:00</updated>
   <id>http://edwingoddard.com/</id>
@@ -25,7 +25,7 @@
 
 <h2>Problem</h2>
 
-<p><a href="https://freedomainradio.com/">Freedomain Radio</a> is the &ldquo;number 1 philosophy podcast&rdquo;. They do not have advertising or sponsors because the host of the show, Stefan Molyneux, believes that his listeners&#8217; time is too important. He relies solely on donations to keep his work going. He is current getting 900GB of downloads a month, and that sort of bandwidth doesn&rsquo;t come cheap. My goal is to build a system that makes it easy for his users to listen to the podcast whilst reducing the bandwidth that he uses with his web hosting .</p>
+<p><a href="https://freedomainradio.com/">Freedomain Radio</a> is the &ldquo;number 1 philosophy podcast&rdquo;. They do not have advertising or sponsors because the host of the show, Stefan Molyneux, believes that his listeners' time is too important. He relies solely on donations to keep his work going. He is current getting 900GB of downloads a month, and that sort of bandwidth doesn&rsquo;t come cheap. My goal is to build a system that makes it easy for his users to listen to the podcast whilst reducing the bandwidth that he uses with his web hosting .</p>
 
 <h2>Solution</h2>
 
@@ -75,56 +75,45 @@ git push origin develop
 
 <p>To set these up you need to add them to the Gemfile. Were going to require rspec-rails in our development and test environment and capybara in our test environment.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">group</span> <span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;rspec-rails&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 2.0&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">group</span> <span class="ss">:test</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;capybara&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 2.1.0&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>```ruby
+group :development, :test do</p>
 
+<pre><code>gem 'rspec-rails', '~&gt; 2.0'
+</code></pre>
+
+<p>end</p>
+
+<p>group :test do</p>
+
+<pre><code>gem 'capybara', '~&gt; 2.1.0'
+</code></pre>
+
+<p>end
+```</p>
 
 <p>We then run <code>bundle</code> to go off and actually install those Ruby gems.</p>
 
-<p>Next we then need to initialise rspec in our app. This will create few files needed by rspec and also the specs directory.</p>
+<p>Next we then need to initialise rspec in our app. This will create few files needed by rspec and also the specs directory.
+<code>bash
+bin/rails generate rspec:install
+</code></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>bin/rails generate rspec:install
-</span></code></pre></td></tr></table></div></figure>
+<p>In the spec/spec_helper.rb file we need to tell rpsec to use capybara. We do this by adding the following line:
+<code>ruby
+require 'capybara/rspec'
+</code></p>
 
-
-<p>In the spec/spec_helper.rb file we need to tell rpsec to use capybara. We do this by adding the following line:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;capybara/rspec&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The final step in getting this setup is to actually generate the binstubs in our applicaitons bin folder. These are <a href="https://github.com/sstephenson/rbenv/wiki/Understanding-binstubs">wrapper files  for the actually binary executables</a>.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle binstubs rspec-core
-</span></code></pre></td></tr></table></div></figure>
-
+<p>The final step in getting this setup is to actually generate the binstubs in our applicaitons bin folder. These are <a href="https://github.com/sstephenson/rbenv/wiki/Understanding-binstubs">wrapper files  for the actually binary executables</a>.
+<code>bash
+bundle binstubs rspec-core
+</code></p>
 
 <p>Because we are using specs rather than tests we can git rid of the directory locally and in git.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rm -rf <span class="nb">test</span>
-</span><span class='line'>git rm -rf <span class="nb">test</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<p><code>bash
+rm -rf test
+git rm -rf test
+</code></p>
 
 <!--
 bundle

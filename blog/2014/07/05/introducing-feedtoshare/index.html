@@ -105,19 +105,22 @@
 
 <div class="entry-content"><p>This is the first in a series of post detailing the development of <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a>. Feed to Share is a Ruby on Rails web app design to consume and RSS feed of podcasts episodes and make a torrent file for each of those episodes. It then goes onto seed those torrents and produces an RSS feed of the torrent episodes to allow other to automatically download the torrents and the episodes.</p>
 
+<!-- More -->
+
+
 <h2>Problem</h2>
 
 <p><a href="https://freedomainradio.com/">Freedomain Radio</a> is the &ldquo;number 1 philosophy podcast&rdquo;. They do not have advertising or sponsors because the host of the show, Stefan Molyneux, believes that his listeners&#8217; time is too important. He relies solely on donations to keep his work going. He is current getting 900GB of downloads a month, and that sort of bandwidth doesn&rsquo;t come cheap. My goal is to build a system that makes it easy for his users to listen to the podcast whilst reducing the bandwidth that he uses with his web hosting .</p>
 
 <h2>Solution</h2>
 
-<p>Stefan talked about torrents but said that they were too difficult for the average user. I want to build a system that downloads a copy of the episode, creates a torrent and starts seeding that episode. FeedToShare is the name that I&rsquo;ve given for that system. It would then create an RSS feed of the torrents allowing some to subscribe to automatically download the new episodes. Once this is up and running I would like to create an Android App based on the <a href="https://github.com/rakshasa/libtorrent/tree/master">libtorrent library</a>. This would allow listeners to share the episode amongst themselves and eventually listen to them in the app.</p>
+<p>Stefan talked about torents but said that they were too difficult for the average user. I want to build a system that downloads a copy of the episode, creates a torrent and starts seeding that episode. FeedToShare is the name that I&rsquo;ve given for that system. It would then create an RSS feed of the torrents allowing some to subscribe to automatically download the new episodes. Once this is up and running I would like to create an Android App based on the <a href="https://github.com/rakshasa/libtorrent/tree/master">libtorrent library</a>. This would allow listeners to share the episode amongst themselves and eventually listen to them in the app.</p>
 
-<p>I&rsquo;ve decided to build <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a> as a web app using Ruby on Rails. Ruby on Rails gives me the ability to develop a web front end for managing the torrents easily. Ruby on Rails also has the capability to spin of ruby processes, these will be used to interact with <a href="http://www.transmissionbt.com/">Transmission</a> that I am using to do the torrent creating and seeding.</p>
+<p>I&rsquo;ve decided to build <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a> as a web app using Ruby on Rails. Ruby on Rails gives me the ability to develop a web front end for managing the torrents easily. Ruby on Rails also has the capability to spin of Ruby processes, these will be used to interact with <a href="http://www.transmissionbt.com/">Transmission</a> that I am using to do the torrent creating and seeding.</p>
 
 <p>I plan to develop this app in the open. All the code is <a href="https://github.com/heedfull/FeedToShare">shared on github</a> and I will be blogging about all that I am doing here, in the hope that it might help other who want to build their own apps. So let&rsquo;s get started.</p>
 
-<p>First want to make sure you have your development environment setup. There is a <a href="http://rubyonrails.org/download/">guide</a> on their website how to do that. If you&rsquo;re on a mac I would recommend using <a href="https://github.com/sstephenson/rbenv">rbenv</a>, so that you can use different versions of ruby on your machine, really useful if you&rsquo;re working on a few different projects or using hosts with different versions of ruby.</p>
+<p>First want to make sure you have your development environment setup. There is a <a href="http://rubyonrails.org/download/">guide</a> on their website how to do that. If you&rsquo;re on a mac I would recommend using <a href="https://github.com/sstephenson/rbenv">rbenv</a>, so that you can use different versions of Ruby on your machine, really useful if you&rsquo;re working on a few different projects or using hosts with different versions of Ruby.</p>
 
 <p>Now that have rails installed you can create a new rails applicaiton</p>
 
@@ -150,6 +153,63 @@ git push origin develop
 </code></pre>
 
 <p>With the git flow model you will be doing most of your work on the develop branch or on feature branches. The master branch is reserved for when you actually release the software. It should contain the code that is actually deployed to your production environment. With this in mind I change the default branch in github to be the develop branch.</p>
+
+<p>I&rsquo;m going to be developing this web app using Test Driven Development. If you haven&rsquo;t heard of the term I thoroughly recommend that you do some research on it. I&rsquo;ve started using it on a project that I&rsquo;m developing at work and can&rsquo;t believe I didn&rsquo;t give it a try sooner. It&rsquo;s great at making you focus on what it is that you are trying to achieve when writing a piece of functionality. It forces you to break down your application into little chunks and develop each chunk one at a time.</p>
+
+<p>I&rsquo;ll be using <a href="http://rubydoc.info/gems/rspec-rails">rspec</a> and <a href="http://jnicklas.github.io/capybara/">capybara</a> to write our tests and execute them. Rspec lets you write the tests in a kind of specification way. You tell the application how you want it to behave before you go and code that behaviour. Capybara acts as a mock browser it will test that certain things are on the page. I&rsquo;ll go into more details later when I actually write some tests.</p>
+
+<p>To set these up you need to add them to the Gemfile. Were going to require rspec-rails in our development and test environment and capybara in our test environment.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">group</span> <span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;rspec-rails&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 2.0&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">group</span> <span class="ss">:test</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;capybara&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 2.1.0&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We then run <code>bundle</code> to go off and actually install those Ruby gems.</p>
+
+<p>Next we then need to initialise rspec in our app. This will create few files needed by rspec and also the specs directory.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bin/rails generate rspec:install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In the spec/spec_helper.rb file we need to tell rpsec to use capybara. We do this by adding the following line:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;capybara/rspec&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The final step in getting this setup is to actually generate the binstubs in our applicaitons bin folder. These are <a href="https://github.com/sstephenson/rbenv/wiki/Understanding-binstubs">wrapper files  for the actually binary executables</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle binstubs rspec-core
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Because we are using specs rather than tests we can git rid of the directory locally and in git.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rm -rf <span class="nb">test</span>
+</span><span class='line'>git rm -rf <span class="nb">test</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 
 <!--
 bundle
@@ -194,6 +254,12 @@ ping 192.168.192.1-->
 
 <time datetime="2014-07-05T23:39:58+01:00" pubdate data-updated="true">Jul 5<sup>th</sup>, 2014</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/feedtoshare/'>feedtoshare</a>
+  
+</span>
 
 
     </p>
