@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://edwingoddard.com/blog/2014/07/14/getting-started-creating-a-scaffold/</loc>
+    <lastmod>2014-07-14T19:56:32+01:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://edwingoddard.com/blog/2014/07/05/introducing-feedtoshare/</loc>
     <lastmod>2014-07-05T23:39:58+01:00</lastmod>
     <priority>0.8</priority>
@@ -11,14 +17,14 @@
   
   <url>
     <loc>http://edwingoddard.com/blog/archives/</loc>
-    <lastmod>2014-07-25T07:42:34+01:00</lastmod>
+    <lastmod>2014-07-27T17:02:06+01:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://edwingoddard.com/</loc>
-    <lastmod>2014-07-25T07:42:34+01:00</lastmod>
+    <lastmod>2014-07-27T17:02:06+01:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Introducing FeedToShare - Edwin Goddard</title>
+  <title>Introducing Feed To Share - Edwin Goddard</title>
   <meta name="author" content="Edwin Goddard">
 
   
@@ -80,7 +80,7 @@
   
   <header>
     
-      <h1 class="entry-title">Introducing FeedToShare</h1>
+      <h1 class="entry-title">Introducing Feed To Share</h1>
     
     
       <p class="meta">
@@ -181,10 +181,8 @@ git push origin develop
 
 <p>Next we then need to initialise rspec in our app. This will create few files needed by rspec and also the specs directory.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>bin/rails generate rspec:install
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code>bin/rails generate rspec:install
+</code></pre>
 
 <p>In the spec/spec_helper.rb file we need to tell rpsec to use capybara. We do this by adding the following line:</p>
 
@@ -195,28 +193,30 @@ git push origin develop
 
 <p>The final step in getting this setup is to actually generate the binstubs in our applicaitons bin folder. These are <a href="https://github.com/sstephenson/rbenv/wiki/Understanding-binstubs">wrapper files  for the actually binary executables</a>.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle binstubs rspec-core
-</span></code></pre></td></tr></table></div></figure>
+<pre><code>bundle binstubs rspec-core
+</code></pre>
 
+<p>Now lets commit those changes</p>
+
+<pre><code>git add .
+git commit -m "Adding rspec and capybara so can do test driven development"
+</code></pre>
 
 <p>Because we are using specs rather than tests we can git rid of the directory locally and in git.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rm -rf <span class="nb">test</span>
-</span><span class='line'>git rm -rf <span class="nb">test</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code>rm -rf test
+git rm -rf test
+</code></pre>
 
+<p>And commit those changes too</p>
+
+<pre><code>git commit -m "Removed test directory as no longer needed"
+</code></pre>
 
 <p>Finally we need to push those changes to GitHub</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git push origin develop
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+<pre><code>git push origin develop
+</code></pre>
 
 <!--
 bundle
@@ -283,6 +283,8 @@ ping 192.168.192.1-->
     <p class="meta">
       
       
+        <a class="basic-alignment right" href="/blog/2014/07/14/getting-started-creating-a-scaffold/" title="Next Post: Getting Started, creating a scaffold">Getting Started, creating a scaffold &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -296,7 +298,11 @@ ping 192.168.192.1-->
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/07/05/introducing-feedtoshare/">Introducing FeedToShare</a>
+        <a href="/blog/2014/07/14/getting-started-creating-a-scaffold/">Getting Started, Creating A Scaffold</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/05/introducing-feedtoshare/">Introducing Feed To Share</a>
       </li>
     
   </ul>

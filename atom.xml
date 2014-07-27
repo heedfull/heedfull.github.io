@@ -4,7 +4,7 @@
   <title><![CDATA[Edwin Goddard]]></title>
   <link href="http://edwingoddard.com/atom.xml" rel="self"/>
   <link href="http://edwingoddard.com/"/>
-  <updated>2014-07-25T07:42:34+01:00</updated>
+  <updated>2014-07-27T17:02:06+01:00</updated>
   <id>http://edwingoddard.com/</id>
   <author>
     <name><![CDATA[Edwin Goddard]]></name>
@@ -14,7 +14,187 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Introducing FeedToShare]]></title>
+    <title type="html"><![CDATA[Getting Started, Creating A Scaffold]]></title>
+    <link href="http://edwingoddard.com/blog/2014/07/14/getting-started-creating-a-scaffold/"/>
+    <updated>2014-07-14T19:56:32+01:00</updated>
+    <id>http://edwingoddard.com/blog/2014/07/14/getting-started-creating-a-scaffold</id>
+    <content type="html"><![CDATA[<p>This is a continuation of the the <a href="[/blog/2014/07/05/introducing-feedtoshare/]">first post</a> on the building of a <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a>. In that post we created the app and installed some gems that we are going to need for testing it.</p>
+
+
+
+
+<p>In this post we are going to create or first entity and all the accompaning files including our tests.</p>
+
+
+
+
+<p>What we need to decide on first is our data model. Whilst I have a very specific problem in mind I&rsquo;m trying to develop this web app so that it is generic enough that it could be used for other feeds, or even multiple feeds. The best starting place is that we will need a feed object.</p>
+
+
+
+
+<p>We now need to decide what properties this object will need. Here&rsquo;s my initial crack at it. These can of course be added to and changed.</p>
+
+
+
+
+<ul>
+<li>Feed Name</li>
+<li>Feed Url</li>
+</ul>
+
+
+
+
+<p>To do this we are going to uses the <code>generate scaffold</code> command. We&rsquo;ll need to put in the name of the object and it&rsquo;s attributes as well as the data types we want them to have.</p>
+
+
+
+
+<pre><code>rails generate scaffold feed name:string url:string 
+</code></pre>
+
+
+
+
+<p>Rails will go off an create lots of things for us. Here is the full list</p>
+
+
+
+
+<pre><code>invoke  active_record
+create    db/migrate/20140726171324_create_feeds.rb
+create    app/models/feed.rb
+invoke    rspec
+create      spec/models/feed_spec.rb
+invoke  resource_route
+route    resources :feeds
+invoke  scaffold_controller
+create    app/controllers/feeds_controller.rb
+invoke    erb
+create      app/views/feeds
+create      app/views/feeds/index.html.erb
+create      app/views/feeds/edit.html.erb
+create      app/views/feeds/show.html.erb
+create      app/views/feeds/new.html.erb
+create      app/views/feeds/_form.html.erb
+invoke    rspec
+create      spec/controllers/feeds_controller_spec.rb
+create      spec/views/feeds/edit.html.erb_spec.rb
+create      spec/views/feeds/index.html.erb_spec.rb
+create      spec/views/feeds/new.html.erb_spec.rb
+create      spec/views/feeds/show.html.erb_spec.rb
+create      spec/routing/feeds_routing_spec.rb
+invoke      rspec
+create        spec/requests/feeds_spec.rb
+invoke    helper
+create      app/helpers/feeds_helper.rb
+invoke      rspec
+create        spec/helpers/feeds_helper_spec.rb
+invoke    jbuilder
+create      app/views/feeds/index.json.jbuilder
+create      app/views/feeds/show.json.jbuilder
+invoke  assets
+invoke    coffee
+create      app/assets/javascripts/feeds.js.coffee
+invoke    scss
+create      app/assets/stylesheets/feeds.css.scss
+invoke  scss
+create    app/assets/stylesheets/scaffolds.css.scss
+</code></pre>
+
+
+
+
+<p>It&rsquo;s created a migration, a script that will tell the database what to do. In this case it&rsquo;s going to create a table for our feeds. Rails also creates a model and a spec for that model for our feeds object. It created a route. This tells rails what to do with requests, where to direct them. It created a controller, this will hold what is sometimes called business logic. This is where we will define the functionality for our feeds objects. It then created some views in erb (Embeded Ruby). These are templates that are used for display our data and interacting with it. It also created test for all these. Finally it created some helpers, coffee script for interactivity and scss for styling.</p>
+
+
+
+
+<p>Next we need to run in those database migrations.</p>
+
+
+
+
+<pre><code>rake db:migrate
+</code></pre>
+
+
+
+
+<p>This has created our feeds table in our development environment. We also need to do this for our test environemt. This is the database that our tests will run against</p>
+
+
+
+
+<pre><code>rake db:migrate RAILS_ENV=test
+</code></pre>
+
+
+
+
+<p>Let&rsquo;s add and commit those changes so that if we need to, we can go back to this point.</p>
+
+
+
+
+<pre><code>git add .
+git commit -m "Scaffold for feeds object"
+</code></pre>
+
+
+
+
+<p>Let&rsquo;s see what has been created for us. Ruby on Rails has a built in server. To fire it up just run</p>
+
+
+
+
+<pre><code>rails server
+</code></pre>
+
+
+
+
+<p>Now when you browse to <a href="http://localhost:3000">http://localhost:3000</a> you will see the standard Welcome to Rails message. If you go to <a href="http://localhost:3000/feeds">http://localhost:3000/feeds</a> you can see what has been created for us.</p>
+
+
+
+
+<p><img class="center" src="http://edwingoddard.com/images/FeedsScaffold.png"></p>
+
+
+
+
+<p>Lets change our app so that this index page is the default page that is loaded. We do this by adding root command to our config.rb file</p>
+
+
+
+
+<div class="highlight"><pre><code class="ruby"><span class="n">root</span> <span class="s1">&#39;feeds#index&#39;</span></code></pre></div>
+
+
+
+
+<p>And commit those changes</p>
+
+
+
+
+<pre><code>git add config/routes.rb
+git commit -m "Changing default page"
+</code></pre>
+
+
+
+
+<p>There you have it. Our first object in our Rails app. Next time we&rsquo;ll create our first test and add some form validation.</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Introducing Feed To Share]]></title>
     <link href="http://edwingoddard.com/blog/2014/07/05/introducing-feedtoshare/"/>
     <updated>2014-07-05T23:39:58+01:00</updated>
     <id>http://edwingoddard.com/blog/2014/07/05/introducing-feedtoshare</id>
@@ -168,9 +348,13 @@ git push origin develop
 <p>Next we then need to initialise rspec in our app. This will create few files needed by rspec and also the specs directory.</p>
 
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>bin/rails generate rspec:install
-</span></code></pre></td></tr></table></div></figure></p>
+
+
+<pre><code>bin/rails generate rspec:install
+</code></pre>
+
+
+
 
 <p>In the spec/spec_helper.rb file we need to tell rpsec to use capybara. We do this by adding the following line:</p>
 
@@ -182,25 +366,59 @@ git push origin develop
 <p>The final step in getting this setup is to actually generate the binstubs in our applicaitons bin folder. These are <a href="https://github.com/sstephenson/rbenv/wiki/Understanding-binstubs">wrapper files  for the actually binary executables</a>.</p>
 
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>bundle binstubs rspec-core
-</span></code></pre></td></tr></table></div></figure></p>
+
+
+<pre><code>bundle binstubs rspec-core
+</code></pre>
+
+
+
+
+<p>Now lets commit those changes</p>
+
+
+
+
+<pre><code>git add .
+git commit -m "Adding rspec and capybara so can do test driven development"
+</code></pre>
+
+
+
 
 <p>Because we are using specs rather than tests we can git rid of the directory locally and in git.</p>
 
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rm -rf <span class="nb">test</span>
-</span><span class='line'>git rm -rf <span class="nb">test</span>
-</span></code></pre></td></tr></table></div></figure></p>
+
+
+<pre><code>rm -rf test
+git rm -rf test
+</code></pre>
+
+
+
+
+<p>And commit those changes too</p>
+
+
+
+
+<pre><code>git commit -m "Removed test directory as no longer needed"
+</code></pre>
+
+
+
 
 <p>Finally we need to push those changes to GitHub</p>
 
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>git push origin develop
-</span></code></pre></td></tr></table></div></figure></p>
+
+
+<pre><code>git push origin develop
+</code></pre>
+
+
+
 
 <!--
 bundle
