@@ -60,9 +60,7 @@ end
 We then run ```bundle``` to go off and actually install those Ruby gems.
 
 Next we then need to initialise rspec in our app. This will create few files needed by rspec and also the specs directory.
-```bash
-bin/rails generate rspec:install
-```
+	bin/rails generate rspec:install
 
 In the spec/spec_helper.rb file we need to tell rpsec to use capybara. We do this by adding the following line:
 ```ruby
@@ -70,21 +68,23 @@ require 'capybara/rspec'
 ```
 
 The final step in getting this setup is to actually generate the binstubs in our applicaitons bin folder. These are [wrapper files  for the actually binary executables](https://github.com/sstephenson/rbenv/wiki/Understanding-binstubs).
-```bash
-bundle binstubs rspec-core
-```
+	bundle binstubs rspec-core
+
+Now lets commit those changes
+	git add .
+	git commit -m "Adding rspec and capybara so can do test driven development"
+
 
 Because we are using specs rather than tests we can git rid of the directory locally and in git.
+	rm -rf test
+	git rm -rf test
 
-```bash
-rm -rf test
-git rm -rf test
-```
+And commit those changes too
+	git commit -m "Removed test directory as no longer needed"
 
 Finally we need to push those changes to GitHub
-```bash
-git push origin develop
-```
+	git push origin develop
+
 
 <!--
 bundle
