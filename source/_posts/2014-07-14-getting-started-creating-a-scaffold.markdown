@@ -9,7 +9,7 @@ published: true
 This is a continuation of the the [first post][FirstPost] on the building of a [FeedToShare](https://github.com/heedfull/FeedToShare). In that post we created the app and installed some gems that we are going to need for testing it.
 
 In this post we are going to create or first entity and all the accompaning files including our tests.
-
+<!-- More -->
 What we need to decide on first is our data model. Whilst I have a very specific problem in mind I'm trying to develop this web app so that it is generic enough that it could be used for other feeds, or even multiple feeds. The best starting place is that we will need a feed object.
 
 We now need to decide what properties this object will need. Here's my initial crack at it. These can of course be added to and changed.
