@@ -51,4 +51,4 @@ Now lets add the code that does the validation. There is a whole [guide to addin
 {% github_sample /heedfull/FeedToShare/0da4cfbbba63fe4f262c146deae9fef595b211ce/app/models/feed.rb %}
 {% endhighlight %}
 
-This additional line will make our test pass. In the next post I will create another test and discuss the importance of not repeating yourself when it comes to coding.
+This additional line will make our test pass. In the next post we will add episodes as a child item to the feeds.
