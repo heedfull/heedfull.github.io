@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Getting Started, Creating A Scaffold - Edwin Goddard</title>
+  <meta name="author" content="Edwin Goddard">
+
+  
+  <meta name="description" content="This is a continuation of the the first post on the building of a FeedToShare. In that post we created the app and installed some gems that we are &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://edwingoddard.com/blog/2014/07/14/getting-started-creating-a-scaffold">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Edwin Goddard" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-52567340-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Edwin Goddard</a></h1>
+  
+    <h2>the path to becoming a unicorn</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:edwingoddard.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Getting Started, Creating A Scaffold</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-14T19:56:32+01:00" pubdate data-updated="true">Jul 14<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This is a continuation of the the <a href="[/blog/2014/07/05/introducing-feedtoshare/]">first post</a> on the building of a <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a>. In that post we created the app and installed some gems that we are going to need for testing it.</p>
+
+<p>In this post we are going to create our first entity and all the accompaning files including our tests.</p>
+
+<!-- More -->
+
+
+<p>What we need to decide on first is our data model. Whilst I have a very specific problem in mind I&rsquo;m trying to develop this web app so that it is generic enough that it could be used for other feeds, or even multiple feeds. The best starting place is that we will need a feed object.</p>
+
+<p>We now need to decide what properties this object will need. Here&rsquo;s my initial crack at it. These can of course be added to and changed.</p>
+
+<ul>
+<li>Feed Name</li>
+<li>Feed Url</li>
+</ul>
+
+
+<p>To do this we are going to uses the <code>generate scaffold</code> command. We&rsquo;ll need to put in the name of the object and it&rsquo;s attributes as well as the data types we want them to have.</p>
+
+<pre><code>rails generate scaffold feed name:string url:string 
+</code></pre>
+
+<p>Rails will go off an create lots of things for us. Here is the full list</p>
+
+<pre><code>invoke  active_record
+create    db/migrate/20140726171324_create_feeds.rb
+create    app/models/feed.rb
+invoke    rspec
+create      spec/models/feed_spec.rb
+invoke  resource_route
+route    resources :feeds
+invoke  scaffold_controller
+create    app/controllers/feeds_controller.rb
+invoke    erb
+create      app/views/feeds
+create      app/views/feeds/index.html.erb
+create      app/views/feeds/edit.html.erb
+create      app/views/feeds/show.html.erb
+create      app/views/feeds/new.html.erb
+create      app/views/feeds/_form.html.erb
+invoke    rspec
+create      spec/controllers/feeds_controller_spec.rb
+create      spec/views/feeds/edit.html.erb_spec.rb
+create      spec/views/feeds/index.html.erb_spec.rb
+create      spec/views/feeds/new.html.erb_spec.rb
+create      spec/views/feeds/show.html.erb_spec.rb
+create      spec/routing/feeds_routing_spec.rb
+invoke      rspec
+create        spec/requests/feeds_spec.rb
+invoke    helper
+create      app/helpers/feeds_helper.rb
+invoke      rspec
+create        spec/helpers/feeds_helper_spec.rb
+invoke    jbuilder
+create      app/views/feeds/index.json.jbuilder
+create      app/views/feeds/show.json.jbuilder
+invoke  assets
+invoke    coffee
+create      app/assets/javascripts/feeds.js.coffee
+invoke    scss
+create      app/assets/stylesheets/feeds.css.scss
+invoke  scss
+create    app/assets/stylesheets/scaffolds.css.scss
+</code></pre>
+
+<p>It&rsquo;s created a migration, a script that will tell the database what to do. In this case it&rsquo;s going to create a table for our feeds. Rails also creates a model and a spec for that model for our feeds object. It created a route. This tells rails what to do with requests, where to direct them. It created a controller, this will hold what is sometimes called business logic. This is where we will define the functionality for our feeds objects. It then created some views in erb (Embeded Ruby). These are templates that are used for display our data and interacting with it. It also created test for all these. Finally it created some helpers, coffee script for interactivity and scss for styling.</p>
+
+<p>Next we need to run in those database migrations.</p>
+
+<pre><code>rake db:migrate
+</code></pre>
+
+<p>This has created our feeds table in our development environment. We also need to do this for our test environemt. This is the database that our tests will run against</p>
+
+<pre><code>rake db:migrate RAILS_ENV=test
+</code></pre>
+
+<p>Let&rsquo;s add and commit those changes so that if we need to, we can go back to this point.</p>
+
+<pre><code>git add .
+git commit -m "Scaffold for feeds object"
+</code></pre>
+
+<p>Let&rsquo;s see what has been created for us. Ruby on Rails has a built in server. To fire it up just run</p>
+
+<pre><code>rails server
+</code></pre>
+
+<p>Now when you browse to <a href="http://localhost:3000">http://localhost:3000</a> you will see the standard Welcome to Rails message. If you go to <a href="http://localhost:3000/feeds">http://localhost:3000/feeds</a> you can see what has been created for us.</p>
+
+<p><img class="center" src="/images/FeedsScaffold.png"></p>
+
+<p>Lets change our app so that this index page is the default page that is loaded. We do this by adding root command to our config.rb file</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">root</span> <span class="s1">&#39;feeds#index&#39;</span></code></pre></div>
+
+
+<p>And commit those changes</p>
+
+<pre><code>git add config/routes.rb
+git commit -m "Changing default page"
+</code></pre>
+
+<p>There you have it. Our first object in our Rails app. Next time we&rsquo;ll create our first test and add some form validation.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Edwin Goddard</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-14T19:56:32+01:00" pubdate data-updated="true">Jul 14<sup>th</sup>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/feedtoshare/'>feedtoshare</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://edwingoddard.com/blog/2014/07/14/getting-started-creating-a-scaffold/" data-via="heedfull" data-counturl="http://edwingoddard.com/blog/2014/07/14/getting-started-creating-a-scaffold/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/05/introducing-feedtoshare/" title="Previous Post: Introducing FeedToShare">&laquo; Introducing FeedToShare</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/08/18/our-first-tests-and-form-validation/" title="Next Post: Our first tests and form validation">Our first tests and form validation &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/our-first-tests-and-form-validation/">Our First Tests And Form Validation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/14/getting-started-creating-a-scaffold/">Getting Started, Creating A Scaffold</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/05/introducing-feedtoshare/">Introducing Feed To Share</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/heedfull">@heedfull</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'heedfull',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Edwin Goddard -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

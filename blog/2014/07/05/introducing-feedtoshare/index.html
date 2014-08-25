@@ -1,0 +1,383 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Introducing FeedToShare - Edwin Goddard</title>
+  <meta name="author" content="Edwin Goddard">
+
+  
+  <meta name="description" content="This is the first in a series of posts detailing the development of FeedToShare. Feed to Share is a Ruby on Rails web app designed to consume an RSS &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://edwingoddard.com/blog/2014/07/05/introducing-feedtoshare">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Edwin Goddard" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-52567340-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Edwin Goddard</a></h1>
+  
+    <h2>the path to becoming a unicorn</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:edwingoddard.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Introducing FeedToShare</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-05T23:39:58+01:00" pubdate data-updated="true">Jul 5<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>This is the first in a series of posts detailing the development of <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a>. Feed to Share is a Ruby on Rails web app designed to consume an RSS feed of podcasts episodes and make a torrent file for each of those episodes. It then goes onto seed those torrents and produces an RSS feed of the torrent episodes to allow other to automatically download the torrents and the episodes.</p>
+
+<!-- More -->
+
+
+<h2>Problem</h2>
+
+<p><a href="https://freedomainradio.com/">Freedomain Radio</a> is the &ldquo;number 1 philosophy podcast&rdquo;. They do not have advertising or sponsors because the host of the show, Stefan Molyneux, believes that his listeners&#8217; time is too important. He relies solely on donations to keep his work going. He is current getting over 1 TB of downloads a month, and that sort of bandwidth doesn&rsquo;t come cheap. My goal is to build a system that makes it easy for his users to listen to the podcast whilst reducing the bandwidth that he uses with his web hosting.</p>
+
+<h2>Solution</h2>
+
+<p>Stefan talked about torents but said that they were too difficult for the average user. I want to build a system that downloads a copy of the episode, creates a torrent and starts seeding that episode. FeedToShare is the name that I&rsquo;ve given for that system. It would then create an RSS feed of the torrents allowing someone to subscribe to automatically download the new episodes. Once this is up and running I would like to create an Android App based on the <a href="https://github.com/rakshasa/libtorrent/tree/master">libtorrent library</a>. This would allow listeners to share the episode amongst themselves and eventually listen to them in the app.</p>
+
+<p>I&rsquo;ve decided to build <a href="https://github.com/heedfull/FeedToShare">FeedToShare</a> as a web app using Ruby on Rails. Ruby on Rails gives me the ability to develop a web front end for managing the torrents easily. Ruby on Rails also has the capability to spin off Ruby processes, these will be used to interact with <a href="http://www.transmissionbt.com/">Transmission</a> to do the torrent creating and seeding.</p>
+
+<p>I plan to develop this app in the open. All the code is <a href="https://github.com/heedfull/FeedToShare">shared on github</a> and I will be blogging about all that I am doing here, in the hope that it might help other who want to build their own apps. So let&rsquo;s get started.</p>
+
+<p>First want to make sure you have your development environment setup. There is a <a href="http://rubyonrails.org/download/">guide</a> on their website how to do that. If you&rsquo;re on a mac I would recommend using <a href="https://github.com/sstephenson/rbenv">rbenv</a>, so that you can use different versions of Ruby on your machine, really useful if you&rsquo;re working on a few different projects or using hosts with different versions of Ruby.</p>
+
+<p>Now that have rails installed you can create a new rails applicaiton</p>
+
+<pre><code>rails new FeedToShare
+</code></pre>
+
+<p>I&rsquo;m going to be using <a href="http://www.git-scm.com/">git</a>, <a href="https://github.com/">github</a> and <a href="https://github.com/nvie/gitflow">git flow</a>. If you haven&rsquo;t tried git flow, I would highly recommend it. I know it&rsquo;s going to make managing this project much eaiser. This <a href="http://vimeo.com/16018419">video walkthorough</a> really helped sell it to me.</p>
+
+<p>First go into the directory that has been created</p>
+
+<pre><code>cd FeedToShare
+</code></pre>
+
+<p>Initialise a new repo</p>
+
+<pre><code>git init
+</code></pre>
+
+<p>And setup git flow in that repo</p>
+
+<pre><code>git flow init
+</code></pre>
+
+<p>I then went and created a new repo on github and added this repo as the origin for our local repo. Then add the files This will make it easy to push and pull changes and share the code with others.</p>
+
+<pre><code>git remote add origin https://github.com/heedfull/FeedToShare.git
+git add .
+git commit -m "Initial commit of rails application"
+git push origin develop
+</code></pre>
+
+<p>With the git flow model you will be doing most of your work on the develop branch or on feature branches. The master branch is reserved for when you actually release the software. It should contain the code that is actually deployed to your production environment. With this in mind I changed the default branch in github to be the develop branch.</p>
+
+<p>I&rsquo;m going to be developing this web app using Test Driven Development. If you haven&rsquo;t heard of the term I thoroughly recommend that you do some research on it. I&rsquo;ve started using it on a project that I&rsquo;m developing at work and can&rsquo;t believe I didn&rsquo;t give it a try sooner. It&rsquo;s great at making you focus on what it is that you are trying to achieve when writing a piece of functionality. It forces you to break down your application into little chunks and develop each chunk one at a time.</p>
+
+<p>I&rsquo;ll be using <a href="http://rubydoc.info/gems/rspec-rails">rspec</a> and <a href="http://jnicklas.github.io/capybara/">capybara</a> to write our tests and execute them. Rspec lets you write the tests in a kind of specification way. You tell the application how you want it to behave before you go and code that behaviour. Capybara acts as a mock browser it will test that certain things are on the page as well as the interactions with that page. I&rsquo;ll go into more details later when I actually write some tests.</p>
+
+<p>To set these up you need to add them to the Gemfile. Were going to require rspec-rails in our development and test environment and capybara in our test environment.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">group</span> <span class="ss">:development</span><span class="p">,</span> <span class="ss">:test</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;rspec-rails&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 2.0&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">group</span> <span class="ss">:test</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;capybara&#39;</span><span class="p">,</span> <span class="s1">&#39;~&gt; 2.1.0&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We then run <code>bundle</code> to go off and actually install those Ruby gems.</p>
+
+<p>Next we then need to initialise rspec in our app. This will create few files needed by rspec and also the specs directory.</p>
+
+<pre><code>bin/rails generate rspec:install
+</code></pre>
+
+<p>In the spec/spec_helper.rb file we need to tell rpsec to use capybara. We do this by adding the following line:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;capybara/rspec&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The final step in getting this setup is to actually generate the binstubs in our applicaitons bin folder. These are <a href="https://github.com/sstephenson/rbenv/wiki/Understanding-binstubs">wrapper files  for the actually binary executables</a>.</p>
+
+<pre><code>bundle binstubs rspec-core
+</code></pre>
+
+<p>Now lets commit those changes</p>
+
+<pre><code>git add .
+git commit -m "Adding rspec and capybara so can do test driven development"
+</code></pre>
+
+<p>Because we are using specs rather than tests we can git rid of the directory locally and in git.</p>
+
+<pre><code>rm -rf test
+git rm -rf test
+</code></pre>
+
+<p>And commit those changes too</p>
+
+<pre><code>git commit -m "Removed test directory as no longer needed"
+</code></pre>
+
+<p>Finally we need to push those changes to GitHub</p>
+
+<pre><code>git push origin develop
+</code></pre>
+
+<!--
+bundle
+bin/rails generate rspec:install
+st .zsh_history
+bundle binstubs rspec-core
+git status
+git add .
+git commit -m "Adding rspec and capybara so can do test driven development"
+git push
+ls
+rm -rf test
+git rm -rf test
+git status
+git commit -m "Removed test directory as no longer needed"
+git push
+git push develop origin
+git push origin develop
+ping 192.168.192.1-->
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Edwin Goddard</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-05T23:39:58+01:00" pubdate data-updated="true">Jul 5<sup>th</sup>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/feedtoshare/'>feedtoshare</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://edwingoddard.com/blog/2014/07/05/introducing-feedtoshare/" data-via="heedfull" data-counturl="http://edwingoddard.com/blog/2014/07/05/introducing-feedtoshare/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/14/getting-started-creating-a-scaffold/" title="Next Post: Getting Started, creating a scaffold">Getting Started, creating a scaffold &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/our-first-tests-and-form-validation/">Our First Tests and Form Validation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/14/getting-started-creating-a-scaffold/">Getting Started, Creating a Scaffold</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/05/introducing-feedtoshare/">Introducing FeedToShare</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/heedfull">@heedfull</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'heedfull',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Edwin Goddard -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

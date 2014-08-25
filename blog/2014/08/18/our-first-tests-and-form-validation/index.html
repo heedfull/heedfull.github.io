@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Our First Tests And Form Validation - Edwin Goddard</title>
+  <meta name="author" content="Edwin Goddard">
+
+  
+  <meta name="description" content="Last time we added our feeds object to our Ruby on Rails app. This time we&rsquo;re going to add some form validation to our feeds forms. Since we &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://edwingoddard.com/blog/2014/08/18/our-first-tests-and-form-validation">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Edwin Goddard" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-52567340-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Edwin Goddard</a></h1>
+  
+    <h2>the path to becoming a unicorn</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:edwingoddard.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Our First Tests And Form Validation</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-18T17:43:28+01:00" pubdate data-updated="true">Aug 18<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="/blog/2014/07/14/getting-started-creating-a-scaffold/">Last time</a> we added our feeds object to our Ruby on Rails app. This time we&rsquo;re going to add some form validation to our feeds forms. Since we will be using test driven development style, we should write the tests before writing the code.</p>
+
+<!--More-->
+
+
+<p>First off lets just run the tests that were created for us.</p>
+
+<pre><code>rake spec
+</code></pre>
+
+<p>We are going to create integration tests. They test the end to end process. Let&rsquo;s create folder to hold those test. The -p option on the mkdir means that it will make all folders along the way. In this case the <code>features</code> folder and the <code>feeds</code> folder within that.</p>
+
+<pre><code>mkdir -p spec/features/feeds
+</code></pre>
+
+<p>Let&rsquo;s create a spec in that folder. If you are using <a href="http://www.sublimetext.com/">Subime Text</a> then I would highly recommend the <a href="https://github.com/skuroda/Sublime-AdvancedNewFile">AdvanceNewFile</a> package. Simply press <code>cmd</code> <code>alt</code> + <code>n</code>. You can then type in the path with tab auto-complete goodness.</p>
+
+<p>Here is our intial first test.</p>
+
+<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;spec_helper&#39;</span>
+
+<span class="n">describe</span> <span class="s2">&quot;Creating feeds&quot;</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">&quot;Displays the feed name once created&quot;</span> <span class="k">do</span>
+        <span class="n">visit</span> <span class="s2">&quot;/feeds&quot;</span>
+        <span class="n">click_link</span> <span class="s2">&quot;New Feed&quot;</span>
+        <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s2">&quot;New feed&quot;</span><span class="p">)</span>
+
+        <span class="n">fill_in</span> <span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="s2">&quot;A good feed&quot;</span>
+        <span class="n">fill_in</span> <span class="s2">&quot;Url&quot;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="s2">&quot;http://myfeedurl.com&quot;</span>
+        <span class="n">click_button</span> <span class="s2">&quot;Create Feed&quot;</span>
+
+        <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s2">&quot;A good feed&quot;</span><span class="p">)</span>
+    <span class="k">end</span>
+<span class="k">end</span></code></pre></div>
+
+
+<p>Can you see what I mean about our test being done in a specification kind of style.
+We are saying that this test is for Creating Feeds and we describe what we want the app to do. In this case, check that what we entered as the name of the feed is succesfully displayed once the feed is created. This test is just testing what was given to use by the scaffold.</p>
+
+<p>Let&rsquo;s check that it works. We do this by running rspec directly and passing in the name of the test that we are interested in.</p>
+
+<pre><code>rspec spec/features/feeds/create_spec.rb
+</code></pre>
+
+<p>This should run successfully and you should get something like this in your terminal window</p>
+
+<p><img class="center" src="/images/successful_test.png"></p>
+
+<p>Let&rsquo;s actually do some test driven development. Lets add another test to this spec. We want the app to display an error when a name isn&rsquo;t entered when trying to create a feed record.</p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/heedfull/FeedToShare/blob/0da4cfbbba63fe4f262c146deae9fef595b211ce/spec/features/feeds/create_spec.rb">This Github Sample</a> is by <a href="https://github.com/heedfull">heedfull</a>
+  </div>
+  <div class="meta-info">
+    spec/features/feeds/create_spec.rb <a href="https://github.com/heedfull/FeedToShare/blob/0da4cfbbba63fe4f262c146deae9fef595b211ce/spec/features/feeds/create_spec.rb">view</a> <a href="https://raw.githubusercontent.com/heedfull/FeedToShare/0da4cfbbba63fe4f262c146deae9fef595b211ce/spec/features/feeds/create_spec.rb">raw</a>
+  </div>
+</div>
+
+
+
+
+<div class="highlight"><pre><code class="ruby"><span class="k">end</span>
+
+<span class="n">it</span> <span class="s2">&quot;displays an error when the feed has no name&quot;</span> <span class="k">do</span>
+    <span class="n">expect</span><span class="p">(</span><span class="no">Feed</span><span class="o">.</span><span class="n">count</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">visit</span> <span class="s2">&quot;/feeds&quot;</span>
+    <span class="n">click_link</span> <span class="s2">&quot;New Feed&quot;</span>
+    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s2">&quot;New feed&quot;</span><span class="p">)</span>
+
+    <span class="n">fill_in</span> <span class="s2">&quot;Name&quot;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">fill_in</span> <span class="s2">&quot;Url&quot;</span><span class="p">,</span> <span class="ss">with</span><span class="p">:</span> <span class="s2">&quot;http://myfeedurl.com&quot;</span>
+    <span class="n">click_button</span> <span class="s2">&quot;Create Feed&quot;</span>
+
+    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+    <span class="n">expect</span><span class="p">(</span><span class="no">Feed</span><span class="o">.</span><span class="n">count</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+   <span class="n">visit</span> <span class="s2">&quot;/feeds&quot;</span>
+   <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to_not</span> <span class="n">have_content</span><span class="p">(</span><span class="s2">&quot;http://myfeedurl.com&quot;</span><span class="p">)</span></code></pre></div>
+
+
+<p>This test is very similiar to our first one. Finally we are using the Feeds collection to check that the feed without a Name is not created.</p>
+
+<p>Lets run our tests again. It should fail, but that&rsquo;s alright it&rsquo;s what we were expecting as we hadn&rsquo;t written any code to stop a feed from being created without a name.</p>
+
+<p><img class="center" src="/images/OurFirstTests_Failure.png"></p>
+
+<p>Now lets add the code that does the validation. There is a whole <a href="http://guides.rubyonrails.org/active_record_validations.html">guide to adding validations in Ruby</a> the first example in the guide is of the type that we are going to use. To do this we add it to our model. It&rsquo;s our model that interfaces with the database, so it makes sense to put the validation in this level of the application.</p>
+
+<div class="github-sample-reference">
+  <div class="author-info">
+    <a href="https://github.com/heedfull/FeedToShare/blob/0da4cfbbba63fe4f262c146deae9fef595b211ce/app/models/feed.rb">This Github Sample</a> is by <a href="https://github.com/heedfull">heedfull</a>
+  </div>
+  <div class="meta-info">
+    app/models/feed.rb <a href="https://github.com/heedfull/FeedToShare/blob/0da4cfbbba63fe4f262c146deae9fef595b211ce/app/models/feed.rb">view</a> <a href="https://raw.githubusercontent.com/heedfull/FeedToShare/0da4cfbbba63fe4f262c146deae9fef595b211ce/app/models/feed.rb">raw</a>
+  </div>
+</div>
+
+
+
+
+<div class="highlight"><pre><code class="ruby"><span class="k">class</span> <span class="nc">Feed</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+  <span class="n">validates</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">presence</span><span class="p">:</span> <span class="kp">true</span>
+<span class="k">end</span></code></pre></div>
+
+
+<p>This additional line will make our test pass. In the next post we will add episodes as a child item to the feeds.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Edwin Goddard</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-18T17:43:28+01:00" pubdate data-updated="true">Aug 18<sup>th</sup>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/feedtoshare/'>feedtoshare</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://edwingoddard.com/blog/2014/08/18/our-first-tests-and-form-validation/" data-via="heedfull" data-counturl="http://edwingoddard.com/blog/2014/08/18/our-first-tests-and-form-validation/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/07/14/getting-started-creating-a-scaffold/" title="Previous Post: Getting Started, creating a scaffold">&laquo; Getting Started, creating a scaffold</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/08/18/our-first-tests-and-form-validation/">Our First Tests And Form Validation</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/14/getting-started-creating-a-scaffold/">Getting Started, Creating A Scaffold</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/05/introducing-feedtoshare/">Introducing Feed To Share</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/heedfull">@heedfull</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'heedfull',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Edwin Goddard -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
